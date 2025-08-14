@@ -2,7 +2,6 @@ import pandas as pd
 from statsmodels.stats.proportion import proportions_ztest
 
 # Нулевая гипотиза H0: Количество событий в группах control и test одинаково
-
 data = pd.read_csv('./data/user_event_data_streaming_mini.csv')
 
 # Подсчет количества событий для каждой группы
