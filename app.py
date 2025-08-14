@@ -3,16 +3,14 @@ from statsmodels.stats.proportion import proportions_ztest
 
 # Нулевая гипотиза H0: Количество событий в группах control и test не изменились
 data = pd.read_csv('./data/user_event_data_streaming_mini.csv')
-data_unique = data['user_id'].unique()
-print(data_unique)
 
 # Подсчет количества событий для каждой группы
 control_events = data[data['group'] == 'control']['event'].value_counts()
 test_events = data[data['group'] == 'test']['event'].value_counts()
 
 # Общее количество пользователей в каждой группе
-total_control = data[data['group'] == 'control']
-total_test = data[data['group'] == 'test']
+total_control = data[data['group'] == 'control'].shape[0]
+total_test = data[data['group'] == 'test'].shape[0]
 
 def zero_hypothesis(event: str):
     control_count = control_events[event]
