@@ -24,7 +24,7 @@ def zero_hypothesis(event: str):
     if p_value < alpha:
         print("Отвергаем нулевую гипотезу, группы различаются. \n")
     else:
-        print("Не отвергаем нулевую гипотезу, различий нет.\n")
+        print("Не отвергаем нулевую гипотезу, различий нет. \n")
 
 unique_events = data['event'].unique()
 
