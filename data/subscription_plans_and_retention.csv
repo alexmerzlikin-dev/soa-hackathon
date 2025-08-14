@@ -1,0 +1,5 @@
+plan,price_usd,retention_1m,retention_3m,retention_6m,arpu_ads_usd
+Free,0.0,0.6,0.4,0.3,0.45
+Monthly,9.99,0.7,0.55,0.42,0.0
+Quarterly,27.99,0.82,0.7,0.58,0.0
+Annual,89.99,0.92,0.86,0.78,0.0
