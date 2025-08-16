@@ -18,31 +18,38 @@ def user_contribution(group: str):
     users_ltv = users.groupby('user_id')['cost'].sum().reset_index()
     return users_ltv
 
-control_users_contribution = user_contribution('control')
-test_users_contribution = user_contribution('test')
-
-def conversion_rate(data_contribution):
+def count_of_users_and_buyers(data_contribution):
     users = len(data_contribution)
     buyers = len(data_contribution[data_contribution['cost'] > 0])
+    return users, buyers
+
+def conversion_rate(users, buyers):
     conversion_rate = buyers/users
     return conversion_rate
 
-# def zero_hypothesis(event: str):
-#     control_count = control_events[event]
-#     test_count = test_events[event]
+def zero_hypothesis(control_users, control_buyers, test_users, test_buyers):
 
-#     stat, p_value = proportions_ztest([control_count, test_count], [total_control, total_test])
+    stat, p_value = proportions_ztest([control_buyers, test_buyers],
+                             [control_users, test_users], alternative = 'smaller')
 
-#     print(f"Для {event}: Z-статистика: {stat}, p-значение: {p_value}")
+    print(f"Z-статистика: {stat}, p-значение: {p_value}")
 
-#     alpha = 0.05
-#     if p_value < alpha:
-#         print("Отвергаем нулевую гипотезу, группы различаются. \n")
-#     else:
-#         print("Не отвергаем нулевую гипотезу, различий нет. \n")
-# # Подсчет количества событий для каждой группы
-# control_events = data[data['group'] == 'control']['event'].value_counts()
-# test_events = data[data['group'] == 'test']['event'].value_counts()
+    alpha = 0.05
+    if p_value < alpha:
+        print("Отвергаем нулевую гипотезу, группы различаются. \n")
+    else:
+        print("Не отвергаем нулевую гипотезу, различий нет. \n")
+
+control_users_contribution = user_contribution('control')
+test_users_contribution = user_contribution('test')
+
+count_users_control, count_buyers_control = count_of_users_and_buyers(control_users_contribution)
+count_users_test, count_buyers_test = count_of_users_and_buyers(test_users_contribution)
+
+# c_conversion_rate = conversion_rate(count_users_control, count_buyers_control)
+# t_conversion_rate = conversion_rate(count_users_test, count_buyers_test)
+
+zero_hypothesis(count_users_control, count_buyers_control, count_users_test, count_buyers_test)
 
 # # Общее количество пользователей в каждой группе
 # total_control = data[data['group'] == 'control'].shape[0]
